@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { ThemeProvider } from "emotion-theming";
 import {
   BrowserRouter as Router,
@@ -11,21 +11,12 @@ import theme from "./theme";
 import SessionProvider, {
   SignedIn,
   SignedOut,
-  login,
-  signup,
-  logout,
-  signinGoogle,
   useUser,
+  signout,
 } from "./FirebaseProvider";
+import SignInForm from "./SignInForm";
 
-import { Box, Flex, Text, Button, Card } from "rebass";
-import { Label, Input } from "@rebass/forms";
-
-const useInput = (initialValue = "") => {
-  const [value, setValue] = useState(initialValue);
-  const inputProps = { value, onChange: (e) => setValue(e.target.value) };
-  return [inputProps, value, setValue];
-};
+import { Box, Flex, Text, Button } from "rebass";
 
 const Home = () => {
   const user = useUser();
@@ -33,63 +24,16 @@ const Home = () => {
   return (
     <Box>
       <Text variant="heading" fontSize={3}>
-        UI Starter Kit
+        UI Starter Kit{" "}
       </Text>
       <Text>Everything you need to get started?</Text>
-      <SignedOut>
-        <Text>(Logged in as {user ? user.email : null})</Text>
-        <Button variant="primary" my={2} onClick={logout}>
-          Logout
-        </Button>
-      </SignedOut>
-    </Box>
-  );
-};
-
-const Signin = () => {
-  const [emailProps, email] = useInput();
-  const [passwordProps, password] = useInput();
-
-  return (
-    <>
-      <Text>Sign In</Text>
       <SignedIn>
-        <Redirect to="/" />
+        <Text>(Logged in as {user ? user.email : null})</Text>
+        <Button variant="primary" my={2} onClick={signout}>
+          Sign Out
+        </Button>
       </SignedIn>
-      <SignedOut>
-        <Card>
-          <Box my={2}>
-            <Label>Email</Label>
-            <Input {...emailProps} />
-          </Box>
-          <Box my={2}>
-            <Label>Password</Label>
-            <Input type="password" {...passwordProps} />
-          </Box>
-          <Box>
-            <Button
-              variant="primary"
-              my={2}
-              mr={2}
-              onClick={() => login(email, password)}
-            >
-              Sign In
-            </Button>
-            <Button
-              variant="primary"
-              my={2}
-              mr={2}
-              onClick={() => signup(email, password)}
-            >
-              Sign Up
-            </Button>
-            <Button variant="primary" my={2} onClick={signinGoogle}>
-              Sign In with Google
-            </Button>
-          </Box>
-        </Card>
-      </SignedOut>
-    </>
+    </Box>
   );
 };
 
@@ -104,7 +48,12 @@ function App() {
           </Flex>
           <Switch>
             <Route path="/login">
-              <Signin />
+              <SignedOut>
+                <SignInForm />
+              </SignedOut>
+              <SignedIn>
+                <Redirect to="/" />
+              </SignedIn>
             </Route>
             <Route path="/">
               <Home />
