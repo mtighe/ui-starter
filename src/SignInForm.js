@@ -1,7 +1,6 @@
 import React from "react";
 import { signin, signup, signinGoogle } from "./FirebaseProvider";
-import { Box, Text, Button, Card } from "rebass";
-import { Label, Input } from "@rebass/forms";
+import { Box, Text, Button, Card, Label, Input } from "theme-ui";
 import { useForm, useField, splitFormProps } from "react-form";
 
 const validatePresence = (message) => (value) => (value ? false : message);

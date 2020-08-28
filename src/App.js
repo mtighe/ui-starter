@@ -1,5 +1,6 @@
-import React from "react";
-import { ThemeProvider } from "emotion-theming";
+/** @jsx jsx */
+import { jsx } from "theme-ui";
+import { ThemeProvider } from "theme-ui";
 import {
   BrowserRouter as Router,
   Switch,
@@ -16,14 +17,18 @@ import SessionProvider, {
 } from "./FirebaseProvider";
 import SignInForm from "./SignInForm";
 
-import { Box, Flex, Text, Button } from "rebass";
+import { Box, Flex, Text, Button } from "theme-ui";
 
 const Home = () => {
   const user = useUser();
 
   return (
     <Box>
-      <Text variant="heading" fontSize={3}>
+      <Text
+        variant="heading"
+        sx={{ fontSize: 4, color: "primary" }}
+        fontSize={3}
+      >
         UI Starter Kit{" "}
       </Text>
       <Text>Everything you need to get started?</Text>

@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@rebass/forms": "^4.0.6",
-    "@rebass/layout": "^4.0.6",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -16,7 +14,7 @@
     "react-form": "^4.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
-    "rebass": "^4.0.7"
+    "theme-ui": "^0.3.1"
   },
   "scripts": {
     "start": "react-scripts start",
