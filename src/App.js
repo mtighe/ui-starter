@@ -15,7 +15,7 @@ import SessionProvider, {
   useUser,
   signout,
 } from "./FirebaseProvider";
-import SignInForm from "./SignInForm";
+import SignInForm from "./components/SignInForm";
 
 import { Box, Flex, Text, Button } from "theme-ui";
 
