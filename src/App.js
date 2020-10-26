@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui";
-import { ThemeProvider } from "theme-ui";
+import { ThemeProvider, Box, Flex, Text, Button } from "theme-ui";
 import {
   BrowserRouter as Router,
   Switch,
@@ -17,7 +17,28 @@ import SessionProvider, {
 } from "./FirebaseProvider";
 import SignInForm from "./components/SignInForm";
 
-import { Box, Flex, Text, Button } from "theme-ui";
+const AuthRoute = ({ signedIn, signedOut, ...rest }) => (
+  <Route {...rest}>
+    <SignedIn>{signedIn}</SignedIn>
+    <SignedOut>{signedOut}</SignedOut>
+  </Route>
+);
+
+const SignedInRoute = ({ children, ...rest }) => (
+  <AuthRoute {...rest} signedIn={children} signedOut={<Redirect to="/" />} />
+);
+
+const SignedOutRoute = ({ children, ...rest }) => (
+  <AuthRoute {...rest} signedIn={<Redirect to="/" />} signedOut={children} />
+);
+
+const LoggedOutHome = () => (
+  <Box>
+    <Text sx={{ fontSize: 3, color: "primary" }} fontSize={3}>
+      Logged out. Sign in!
+    </Text>
+  </Box>
+);
 
 const Home = () => {
   const user = useUser();
@@ -52,17 +73,14 @@ function App() {
             <Link to="/login">Login</Link>
           </Flex>
           <Switch>
-            <Route path="/login">
-              <SignedOut>
-                <SignInForm />
-              </SignedOut>
-              <SignedIn>
-                <Redirect to="/" />
-              </SignedIn>
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
+            <SignedOutRoute path="/login">
+              <SignInForm />
+            </SignedOutRoute>
+            <AuthRoute
+              path="/"
+              signedIn={<Home />}
+              signedOut={<LoggedOutHome />}
+            />
           </Switch>
         </ThemeProvider>
       </Router>
